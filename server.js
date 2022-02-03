@@ -47,6 +47,7 @@ function mainMenu() {
                     break;
                 case "Add Department":
                     // run function
+                    addDepartment();
                     break;
                 case "Add a Role":
                     // run function
@@ -62,7 +63,7 @@ function mainMenu() {
 }
 
 function viewDepartment() {
-    db.query('SELECT * FROM department', function (err, res) {
+    db.query('SELECT name FROM department', function (err, res) {
         if (err) throw err;
         console.table(res);
         mainMenu();
@@ -71,7 +72,7 @@ function viewDepartment() {
 
 
 function viewRoles() {
-    db.query('SELECT * FROM role', function (err, res) {
+    db.query('SELECT role.title FROM role', function (err, res) {
         if (err) throw err;
         console.table(res);
         mainMenu();
@@ -80,11 +81,33 @@ function viewRoles() {
 
 
 function viewEmployees() {
-    db.query('SELECT * FROM employee', function (err, res) {
+    db.query('SELECT employee.first_name, employee.last_name FROM employee', function (err, res) {
         if (err) throw err;
         console.table(res);
         mainMenu();
     })
+}
+
+function addDepartment() {
+    inquirer
+        .prompt([
+            {
+                type: "input",
+                name: "addDepart",
+                message: "Please type the name of the department you want to add."
+            }
+        ])
+        .then((answer) => {
+            db.query(`INSERT INTO department (name) values ("${answer.addDepart}")`)
+            mainMenu();
+        })
+}
+
+function addRole() {
+    inquirer
+    .prompt([
+        
+    ])
 }
 
 mainMenu();
