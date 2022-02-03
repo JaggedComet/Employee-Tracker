@@ -17,7 +17,7 @@ function mainMenu() {
         .prompt([
             {
                 type: "list",
-                name: "mainmenu",
+                name: "mainMenu",
                 message: "Select Choice",
                 choices: [
                     "View All Departments",
@@ -32,10 +32,10 @@ function mainMenu() {
         ])
         .then((answers) => {
             // print user choice
-            switch (answers.options) {
+            switch (answers.mainMenu) {
                 case "View All Departments":
                     // run function
-                    viewDepartment
+                    viewDepartment();
                     break;
                 case "View All Roles":
                     // run function
@@ -56,21 +56,18 @@ function mainMenu() {
                     // run function
                     break;
             }
-            console.log(answers.department);
         });
 }
 
 function viewDepartment() {
-    db.query('SELECT * FROM employee', function (err, results) {
-        const choices = results.map((employee) => ({
-            name: `${employee.first_name} ${employee.last_name}`,
-            id: `${employee.id}`
-        }));
-        console.table(choices);
+    db.query('SELECT * FROM department', function (err, res) {
+        if (err) throw err;
+        console.table(res);
         mainMenu();
     })
 }
 
+mainMenu();
 // db.query('SELECT * FROM employee', function (err, results) {
 //   const choices = results.map((employee) => ({
 //     name: `${employee.first_name} ${employee.last_name}`, 
