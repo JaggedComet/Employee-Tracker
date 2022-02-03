@@ -51,9 +51,11 @@ function mainMenu() {
                     break;
                 case "Add a Role":
                     // run function
+                    addRole();
                     break;
                 case "Add an Employee":
                     // run function
+                    addEmployee();
                     break;
                 case "Update Employee Role":
                     // run function
@@ -106,8 +108,64 @@ function addDepartment() {
 function addRole() {
     inquirer
     .prompt([
-        
+        {
+            type: "input",
+            name: "newTitle",
+            message: "Name the Role:",
+        },
+        {
+            type: "input",
+            name: "newSalary",
+            message: "How much are they getting paid?",
+        },
+        {
+            type: "input",
+            name: "newDepart",
+            message: "Which department?",
+        },
     ])
+    .then((answer) => {
+        db.query(`INSERT INTO role (title, salary, department_id) values ("${answer.newTitle}", "${answer.newSalary}", "${answer.newDepart}")`)
+        mainMenu();
+    })
+}
+
+function addEmployee() {
+    inquirer
+    .prompt([
+        {
+            type: "input",
+            name: "newFirst",
+            message: "What's the first name of the new Employee?",
+        },
+        {
+            type: "input",
+            name: "newLast",
+            message: "What's the last name of the new Employee?",
+        },
+        {
+            type: "input",
+            name: "empRole",
+            message: "What role does this employee have?",
+            // validate: {
+            //     isInt: true,
+            //     notNull: true,
+            // }
+        },
+        {
+            type: "input",
+            name: "empManager",
+            message: "Who is the employee manager?",
+            // validate: {
+            //     isInt: true,
+            //     notNull: true,
+            // }
+        },
+    ])
+    .then((answer) => {
+        db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) values ("${answer.newFirst}", "${answer.newLast}", "${answer.empRole}", "${answer.empManager}")`)
+        mainMenu();
+    })
 }
 
 mainMenu();
