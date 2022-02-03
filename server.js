@@ -39,9 +39,11 @@ function mainMenu() {
                     break;
                 case "View All Roles":
                     // run function
+                    viewRoles();
                     break;
                 case "View All Employees":
                     // run function
+                    viewEmployees();
                     break;
                 case "Add Department":
                     // run function
@@ -67,10 +69,28 @@ function viewDepartment() {
     })
 }
 
+
+function viewRoles() {
+    db.query('SELECT * FROM role', function (err, res) {
+        if (err) throw err;
+        console.table(res);
+        mainMenu();
+    })
+}
+
+
+function viewEmployees() {
+    db.query('SELECT * FROM employee', function (err, res) {
+        if (err) throw err;
+        console.table(res);
+        mainMenu();
+    })
+}
+
 mainMenu();
 // db.query('SELECT * FROM employee', function (err, results) {
 //   const choices = results.map((employee) => ({
-//     name: `${employee.first_name} ${employee.last_name}`, 
+//     name: `${employee.first_name} ${employee.last_name}`,
 //     id: `${employee.id}`
 //   }));
 //   console.table(choices);
