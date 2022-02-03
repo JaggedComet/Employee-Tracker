@@ -107,66 +107,80 @@ function addDepartment() {
 
 function addRole() {
     inquirer
-    .prompt([
-        {
-            type: "input",
-            name: "newTitle",
-            message: "Name the Role:",
-        },
-        {
-            type: "input",
-            name: "newSalary",
-            message: "How much are they getting paid?",
-        },
-        {
-            type: "input",
-            name: "newDepart",
-            message: "Which department?",
-        },
-    ])
-    .then((answer) => {
-        db.query(`INSERT INTO role (title, salary, department_id) values ("${answer.newTitle}", "${answer.newSalary}", "${answer.newDepart}")`)
-        mainMenu();
-    })
+        .prompt([
+            {
+                type: "input",
+                name: "newTitle",
+                message: "Name the Role:",
+            },
+            {
+                type: "input",
+                name: "newSalary",
+                message: "How much are they getting paid?",
+            },
+            {
+                type: "input",
+                name: "newDepart",
+                message: "Which department?",
+            },
+        ])
+        .then((answer) => {
+            db.query(`INSERT INTO role (title, salary, department_id) values ("${answer.newTitle}", "${answer.newSalary}", "${answer.newDepart}")`)
+            mainMenu();
+        })
 }
 
 function addEmployee() {
     inquirer
-    .prompt([
-        {
-            type: "input",
-            name: "newFirst",
-            message: "What's the first name of the new Employee?",
-        },
-        {
-            type: "input",
-            name: "newLast",
-            message: "What's the last name of the new Employee?",
-        },
-        {
-            type: "input",
-            name: "empRole",
-            message: "What role does this employee have?",
-            // validate: {
-            //     isInt: true,
-            //     notNull: true,
-            // }
-        },
-        {
-            type: "input",
-            name: "empManager",
-            message: "Who is the employee manager?",
-            // validate: {
-            //     isInt: true,
-            //     notNull: true,
-            // }
-        },
-    ])
-    .then((answer) => {
-        db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) values ("${answer.newFirst}", "${answer.newLast}", "${answer.empRole}", "${answer.empManager}")`)
-        mainMenu();
-    })
+        .prompt([
+            {
+                type: "input",
+                name: "newFirst",
+                message: "What's the first name of the new Employee?",
+            },
+            {
+                type: "input",
+                name: "newLast",
+                message: "What's the last name of the new Employee?",
+            },
+            {
+                type: "input",
+                name: "empRole",
+                message: "What role does this employee have?",
+                // validate: {
+                //     isInt: true,
+                //     notNull: true,
+                // }
+            },
+            {
+                type: "input",
+                name: "empManager",
+                message: "Who is the employee manager?",
+                // validate: {
+                //     isInt: true,
+                //     notNull: true,
+                // }
+            },
+        ])
+        .then((answer) => {
+            db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) values ("${answer.newFirst}", "${answer.newLast}", "${answer.empRole}", "${answer.empManager}")`)
+            mainMenu();
+        })
 }
+
+// update an employee role
+function updateEmployee() {
+    db.query("Select * from employee");
+    inquirer
+        .prompt([
+            {
+                type: "input",
+                name: "selectEmployee",
+                message: "Please select employee by id, whose role you want to change."
+            }
+        ])
+}
+
 
 mainMenu();
 // db.query('SELECT * FROM employee', function (err, results) {
