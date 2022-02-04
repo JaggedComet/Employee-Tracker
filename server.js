@@ -83,7 +83,7 @@ function viewRoles() {
 
 // Function to view employees
 function viewEmployees() {
-    db.query('SELECT employee.id, employee.first_name, employee.last_name, employee.role_id, employee.manager_id FROM employee', function (err, res) {
+    db.query('SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary AS salary FROM employee JOIN role ON role.id = employee.role_id JOIN department On department.id = role.department_id', function (err, res) {
         if (err) throw err;
         console.table(res);
         mainMenu();
@@ -191,7 +191,7 @@ function addEmployee() {
 // update an employee role
 function updateEmployee() {
     // show the employee table
-    db.query('SELECT * FROM employee', function (err, res) {
+    db.query('SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary AS salary FROM employee JOIN role ON role.id = employee.role_id JOIN department On department.id = role.department_id', function (err, res) {
         if (err) throw err;
         console.table(res);
         // show the role table
@@ -218,7 +218,11 @@ function updateEmployee() {
                 .then((answer) => {
                     // updates the new role for the employee
                     db.query(`UPDATE employee SET role_id = ${answer.empRole} WHERE id = ${answer.selectEmployee}`);
-                    mainMenu();
+                    db.query('SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary AS salary FROM employee JOIN role ON role.id = employee.role_id JOIN department On department.id = role.department_id', function (err, res) {
+                        if (err) throw err;
+                        console.table(res);
+                        mainMenu();
+                    })
                 })
         })
     })
