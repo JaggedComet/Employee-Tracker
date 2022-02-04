@@ -57,6 +57,10 @@ This project is not open to contributions from third parties.
 
 https://watch.screencastify.com/v/EJJ55aXrd2U8irPAeFI7
 
+## Future Ideas
+
+Would like to get rid of text input and only use arrays in the future.
+
 ## Creator Information
 
 https://github.com/JaggedComet
